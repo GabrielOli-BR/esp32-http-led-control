@@ -1,4 +1,4 @@
-//lybraries
+//Libraries
 #include <Arduino.h>
 #include <WiFiMulti.h>
 #include <WebServer.h>
@@ -9,13 +9,17 @@
 #define Led2 GPIO_NUM_5
 #define Led3 GPIO_NUM_18
 
+// Automatically selects and connects to the strongest configured Wi-Fi network
 WiFiMulti Multi;
+
+// HTTP server instance running on port 80
 WebServer server(80);
 
-//function to store the http request
+//function to store the http page
 void handle_root();
 
 void setup() {
+  //start serial communication
 Serial.begin (115200);
 
 //Leds pinModes/initial status
@@ -28,11 +32,11 @@ digitalWrite(Led2, LOW);
 pinMode(Led3, OUTPUT);
 digitalWrite(Led3, LOW);
 
-//wifi list
-Multi.addAP("Virus_2.4G", "desconheco");
-Multi.addAP("Cris Silva", "desconheco");
+//wifi network credential list
+Multi.addAP("ssid1", "password1");
+Multi.addAP("ssid2", "password2");
 
-//connecting loop
+//connecting to wifi loop
 while (Multi.run() != WL_CONNECTED){
 digitalWrite(builtin, LOW);
 Serial.println("Não Conectado");
@@ -75,16 +79,20 @@ server.on("/Led3/OFF", []{
   server.sendHeader("Location", "/");
   server.send(303);
 });
+
+// Initializes the web server and starts listening for client connections
 server.begin();
 }
 
 void loop() {
+
+  // Processes incoming HTTP requests from connected clients in loop
   server.handleClient();
 }
 
 void handle_root(){
   
-  //Pagina HTML
+  //HTML page
   String HTML = 
   "<h1>CONTROLADOR DE LED</h1>";
   if(digitalRead(Led1)==LOW){
