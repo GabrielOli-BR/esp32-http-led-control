@@ -40,8 +40,6 @@ The system allows real-time GPIO control using HTTP requests over a local Wi-Fi 
 3. The user accesses the ESP32 IP address
 4. HTTP requests are sent through the browser
 5. LEDs are turned on or off in real time
-## Project Images
-![esp32](image/esp32_image.jpeg)
 ## Author
 
 GabOli (Gabriel Oliveira)
